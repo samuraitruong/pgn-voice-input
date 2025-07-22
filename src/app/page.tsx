@@ -3,7 +3,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import { ChevronDown, ChevronRight } from 'lucide-react';
 
-function EngineAnalysisPanel({ pvLines }: { pvLines: any }) {
+// PVLine type matches useStockfishWorker output
+export type PVLine = {
+  cp: number | null;
+  mate: number | null;
+  moves: string[];
+  san: string;
+};
+function EngineAnalysisPanel({ pvLines }: { pvLines: PVLine[] }) {
   const [isOpen, setIsOpen] = useState(true);
   return (
     <div>
