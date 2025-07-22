@@ -10,11 +10,17 @@ const dictionary: { [x: string]: string } = {
   "two": "2",
   "three": "3",
   "four": "4",
+  "for": "4",
+  "the": "d",
   "five": "5",
   "six": "6",
   "seven": "7",
   "eight": "8",
   "sick": "6",
+  "9": "N",
+  "tag": "x",
+  "keen": "K",
+  "naye": "N",
 }
 
 export function translateSpokenMove(spokenText: string): string {
@@ -35,7 +41,7 @@ export function translateSpokenMove(spokenText: string): string {
 
   // Remove trailing words that are not part of the move
   const trailingWords = [
-    'check', 'equals', 'queen', 'promote', 'to', 'mate', 'with', 'by', 'pawn', 'rook', 'bishop', 'knight', 'king', 'castle', 'castles', 'takes', 'capture', 'captures', 'and', 'then', 'plus', 'equals queen', 'equals rook', 'equals bishop', 'equals knight', 'equals king', 'equals pawn',
+    'check', 'mate',
   ];
   while (tokens.length > 0 && trailingWords.includes(tokens[tokens.length - 1])) {
     tokens.pop();
@@ -52,12 +58,12 @@ export function translateSpokenMove(spokenText: string): string {
     return 'O-O'; // Default to kingside
   }
   if (
-    joined.includes('queen') || joined.includes('queenside') || joined.includes('long')
+    joined.includes("castle") && (joined.includes('queen') || joined.includes('queenside') || joined.includes('long'))
   ) {
     return 'O-O-O';
   }
   if (
-    joined.includes('king') || joined.includes('kingside') || joined.includes('short')
+    joined.includes("castle") && (joined.includes('king') || joined.includes('kingside') || joined.includes('short'))
   ) {
     return 'O-O';
   }

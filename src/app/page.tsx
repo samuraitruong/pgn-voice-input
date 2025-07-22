@@ -210,8 +210,8 @@ export default function Home() {
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen bg-gray-100">
-      <div className="w-full md:w-2/3 p-4 relative">
-        <div ref={boardContainerRef} className="w-full flex flex-row items-center gap-4" style={{ minHeight: '320px' }}>
+      <div className="w-full md:w-2/3 p-2  sm:p-4 relative">
+        <div ref={boardContainerRef} className="w-full flex flex-row items-center gap-2 sm:gap-4" style={{ minHeight: '320px' }}>
           <div style={{ height: boardWidth + 'px', width: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <EvaluationBar
               evaluation={
@@ -235,8 +235,8 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="w-full md:w-1/3 bg-white p-4 border-l">
-        <div className="space-y-4">
+      <div className="w-full md:w-1/3 bg-white p-4 md:pt-2 border-l">
+        <div className="space-y-2">
           <PgnDataForm pgnHeaders={pgnHeaders} setPgnHeaders={setPgnHeaders} />
           <div className="border rounded-md bg-gray-50">
             <EngineAnalysisPanel pvLines={pvLines} />

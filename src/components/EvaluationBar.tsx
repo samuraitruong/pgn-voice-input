@@ -38,7 +38,7 @@ export default function EvaluationBar({ evaluation, vertical, style }: Evaluatio
   const isWhiteWinning = evalValue >= 0;
 
   return (
-    <div className="absolute bg-gray-700 rounded-md overflow-hidden w-full h-8" style={typeof style === 'object' ? style : {}}>
+    <div className="absolute bg-gray-700  overflow-hidden w-full h-8" style={typeof style === 'object' ? style : {}}>
       <div
         className="h-full bg-white transition-all duration-300 relative"
         style={getBarStyle()}
