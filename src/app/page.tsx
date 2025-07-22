@@ -217,7 +217,7 @@ export default function Home() {
               evaluation={
                 bestLine
                   ? (bestLine.mate !== null
-                    ? `Mate in ${Math.abs(bestLine.mate)}`
+                    ? `M${Math.abs(bestLine.mate)}`
                     : bestLine.cp !== null
                       ? (bestLine.cp / 100).toFixed(2)
                       : evaluation)

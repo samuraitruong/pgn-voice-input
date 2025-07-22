@@ -38,7 +38,7 @@ export function useStockfishWorker() {
           const centipawns = type === 'cp' ? value : (value > 0 ? Infinity : -Infinity);
           setEvaluation(
             type === 'mate'
-              ? `Mate in ${Math.abs(value)}`
+              ? `M${Math.abs(value)}`
               : `${(centipawns / 100).toFixed(2)}`
           );
         }
