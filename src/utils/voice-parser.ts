@@ -1,5 +1,33 @@
+const dictionary: { [x: string]: string } = {
+  'app': 'f', // Replace 'app' with 'f' for file
+  "see": "c",
+  "sea": "c",
+  "seas": "c",
+  "head": "h",
+  "heck": "h",
+  "tech": "takes",
+  "one": "1",
+  "two": "2",
+  "three": "3",
+  "four": "4",
+  "five": "5",
+  "six": "6",
+  "seven": "7",
+  "eight": "8",
+  "sick": "6",
+}
+
 export function translateSpokenMove(spokenText: string): string {
-  const move = spokenText.toLowerCase().trim();
+
+  let move = spokenText.toLocaleLowerCase().trim();
+
+  for (const key in dictionary) {
+    if (Object.prototype.hasOwnProperty.call(dictionary, key)) {
+      const value = dictionary[key];
+      move = move.replace(new RegExp(`\\b${key}\\b`, 'g'), value);
+    }
+  }
+
   let tokens = move.split(' ').filter(Boolean);
 
   // Replace 'app' with 'f' for file

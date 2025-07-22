@@ -28,7 +28,7 @@ export class StockfishWorker {
   private handleMessage(e: MessageEvent) {
     const line = typeof e.data === 'string' ? e.data : '';
     // Debug log
-    console.log('[Stockfish Worker handleMessage]', line);
+    // console.log('[Stockfish Worker handleMessage]', line);
 
     if (line === 'readyok') {
       this.isReady = true;
