@@ -25,13 +25,19 @@ export default function MoveList({ moves, selectedMove, onSelectMove, onDeleteMo
                 <td className="w-8 pr-2 text-right text-gray-500">{index + 1}.</td>
                 <td
                   className={`p-1 cursor-pointer rounded-md text-gray-900 ${selectedMove === index * 2 ? 'bg-blue-200' : ''}`}
-                  onClick={() => onSelectMove(index * 2)}
+                  onClick={e => {
+                    e.stopPropagation();
+                    onSelectMove(index * 2);
+                  }}
                 >
                   {pair[0]}
                 </td>
                 <td
                   className={`p-1 cursor-pointer rounded-md text-gray-900 ${selectedMove === index * 2 + 1 ? 'bg-blue-200' : ''}`}
-                  onClick={() => pair[1] && onSelectMove(index * 2 + 1)}
+                  onClick={e => {
+                    e.stopPropagation();
+                    if (pair[1]) onSelectMove(index * 2 + 1);
+                  }}
                 >
                   {pair[1]}
                 </td>

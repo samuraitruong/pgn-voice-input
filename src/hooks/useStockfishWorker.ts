@@ -57,7 +57,7 @@ export function useStockfishWorker() {
               const moveObj = chess.move(m, { sloppy: true });
               if (moveObj) sanMoves.push(moveObj.san);
             });
-          } catch (e) {}
+          } catch (e) { }
           pvMap[idx] = { moves, cp, mate };
           // Update PV lines: keep only top 4 by score, and always from white's perspective
           const pvArray = Object.keys(pvMap)
@@ -72,10 +72,11 @@ export function useStockfishWorker() {
                   const moveObj = chess.move(m, { sloppy: true });
                   if (moveObj) sanMoves.push(moveObj.san);
                 });
-              } catch (e) {}
+              } catch (e) { }
               // Reverse cp for black to move
               let cpValue = pv.cp;
-              if (cpValue !== null && turn === 'b') cpValue = -cpValue;
+              // console.log("cpValue", cpValue, turn);
+              // if (cpValue !== null && turn === 'b') cpValue = -cpValue;
               return { cp: cpValue, mate: pv.mate, moves: pv.moves, san: sanMoves.join(' ') };
             })
             .filter(line => line.cp !== null || line.mate !== null)

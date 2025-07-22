@@ -1,12 +1,8 @@
 "use client";
 
-import { useRef } from "react";
-
-
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Chess } from "chess.js";
 import { Chessboard } from "react-chessboard";
-import { Crown } from "lucide-react";
 import PgnDataForm from "../components/PgnDataForm";
 import MoveList from "../components/MoveList";
 import Controls from "../components/Controls";
@@ -139,8 +135,10 @@ export default function Home() {
   };
 
   const handleDownload = () => {
-    const newGame = new Chess(game.fen());
+    // Create a new Chess instance and load all moves
+    const newGame = new Chess();
     newGame.header(...Object.entries(pgnHeaders).flat());
+    game.history().forEach(move => newGame.move(move));
     const pgn = newGame.pgn();
     const blob = new Blob([pgn], { type: "text/pgn" });
     const url = URL.createObjectURL(blob);
@@ -160,13 +158,13 @@ export default function Home() {
   }
 
   const handleSelectMove = (moveIndex: number) => {
-    const newGame = new Chess();
-    const moves = game.history().slice(0, moveIndex + 1);
-    moves.forEach(move => newGame.move(move));
-    setGame(newGame);
-    setFen(newGame.fen());
+    // Only update FEN and selectedMove, do not mutate game state
+    const moves = game.history();
+    const tempGame = new Chess();
+    moves.slice(0, moveIndex + 1).forEach(move => tempGame.move(move));
+    setFen(tempGame.fen());
     setSelectedMove(moveIndex);
-    analyzeBoard(newGame.fen());
+    analyzeBoard(tempGame.fen());
   };
 
   const handleDeleteMove = (moveIndex: number) => {
@@ -182,25 +180,16 @@ export default function Home() {
   return (
     <div className="flex flex-col md:flex-row min-h-screen bg-gray-100">
       <div className="w-full md:w-2/3 p-4 relative">
-        {/* Turn indicator icon */}
-        <div className="absolute left-0 z-10 flex flex-col items-center w-8 h-full justify-between pointer-events-none">
-          <span className={`transition-opacity ${!isWhiteTurn ? 'opacity-100' : 'opacity-0'}`}> {/* Top for Black */}
-            <Crown className="w-6 h-6 text-gray-800 drop-shadow" />
-          </span>
-          <span className={`transition-opacity ${isWhiteTurn ? 'opacity-100' : 'opacity-0'}`}> {/* Bottom for White */}
-            <Crown className="w-6 h-6 text-yellow-500 drop-shadow" />
-          </span>
-        </div>
         <div ref={boardContainerRef} className="w-full flex flex-row items-center gap-4" style={{ minHeight: '320px' }}>
           <div style={{ height: boardWidth + 'px', width: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <EvaluationBar
               evaluation={
                 bestLine
                   ? (bestLine.mate !== null
-                      ? `Mate in ${Math.abs(bestLine.mate)}`
-                      : bestLine.cp !== null
-                        ? (bestLine.cp / 100).toFixed(2)
-                        : evaluation)
+                    ? `Mate in ${Math.abs(bestLine.mate)}`
+                    : bestLine.cp !== null
+                      ? (bestLine.cp / 100).toFixed(2)
+                      : evaluation)
                   : evaluation
               }
               style={{ transform: 'rotate(-90deg)', width: boardWidth + 'px', height: '32px' }}
