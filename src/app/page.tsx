@@ -208,7 +208,7 @@ export default function Home() {
           <PgnDataForm pgnHeaders={pgnHeaders} setPgnHeaders={setPgnHeaders} />
           <div className="border rounded-md bg-gray-50">
             <details open>
-              <summary className="cursor-pointer py-2 px-3 font-semibold text-gray-800 select-none">Engine analysis</summary>
+              <summary className="cursor-pointer py-1 px-2 font-semibold text-gray-800 select-none">Engine analysis</summary>
               <div className="px-3 pb-2 pt-1">
                 <BestMoves pvLines={pvLines} />
               </div>
