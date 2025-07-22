@@ -3,11 +3,11 @@ import React from 'react';
 interface EvaluationBarProps {
   evaluation: string;
   vertical?: boolean;
-  bestMove?: string;
+  // bestMove?: string;
   style?: React.CSSProperties;
 }
 
-export default function EvaluationBar({ evaluation, vertical, bestMove, style }: EvaluationBarProps) {
+export default function EvaluationBar({ evaluation, vertical, style, vertical: isVertical }: EvaluationBarProps) {
   const getBarStyle = () => {
     if (vertical) {
       // Vertical bar: height is percentage, width is fixed

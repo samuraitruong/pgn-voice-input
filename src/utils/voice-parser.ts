@@ -1,5 +1,5 @@
 export function translateSpokenMove(spokenText: string): string {
-  let move = spokenText.toLowerCase().trim();
+  const move = spokenText.toLowerCase().trim();
   let tokens = move.split(' ').filter(Boolean);
 
   // Replace 'app' with 'f' for file

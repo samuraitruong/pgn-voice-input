@@ -50,12 +50,11 @@ export default function Home() {
   } = useSpeechRecognition();
   const { evaluation, pvLines, bestLine, analyzeBoard } = useStockfishWorker();
 
-  const turn = game.turn(); // 'w' or 'b'
-  const isWhiteTurn = turn === 'w';
+  // const turn = game.turn(); // 'w' or 'b'
 
   useEffect(() => {
     analyzeBoard(game.fen());
-  }, [game, analyzeBoard]);
+  }, [game, analyzeBoard, resetTranscript]);
 
   useEffect(() => {
     if (transcript) {
@@ -73,7 +72,7 @@ export default function Home() {
           analyzeBoard(gameCopy.fen());
           resetTranscript();
         }
-      } catch (error) {
+      } catch {
         // Ignore invalid moves
       }
     }

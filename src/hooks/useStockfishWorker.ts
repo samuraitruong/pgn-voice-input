@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { StockfishWorker } from '../utils/stockfish-worker';
+import { Chess } from 'chess.js';
 
 export function useStockfishWorker() {
   const workerRef = useRef<StockfishWorker | null>(null);
@@ -15,15 +16,14 @@ export function useStockfishWorker() {
   }, []);
 
   const analyzeBoard = useCallback((fen: string) => {
-    console.log("analyzeBoard", fen, workerRef.current);
     if (!workerRef.current) return;
-    let pvMap: { [key: string]: { moves: string[], cp: number | null, mate: number | null } } = {};
+    const pvMap: { [key: string]: { moves: string[], cp: number | null, mate: number | null } } = {};
     const turn = fen.split(' ')[1]; // 'w' or 'b'
     workerRef.current.analyze(
       fen,
       (info) => {
         // Debug log
-        console.log('[useStockfishWorker] info:', info);
+        // console.log('[useStockfishWorker] info:', info);
         // Parse evaluation
         let cp: number | null = null;
         let mate: number | null = null;
@@ -48,35 +48,33 @@ export function useStockfishWorker() {
           const idx = parseInt(pvMatch[1], 10) - 1;
           const moves = pvMatch[2].trim().split(' ');
           // Convert moves to SAN using chess.js
-          let sanMoves: string[] = [];
-          let fenForLine = fen;
+          const sanMoves: string[] = [];
+          const fenForLine = fen;
           try {
-            const { Chess } = require('chess.js');
             const chess = new Chess(fenForLine);
             moves.forEach(m => {
-              const moveObj = chess.move(m, { sloppy: true });
+              const moveObj = chess.move(m,);
               if (moveObj) sanMoves.push(moveObj.san);
             });
-          } catch (e) { }
+          } catch { }
           pvMap[idx] = { moves, cp, mate };
           // Update PV lines: keep only top 4 by score, and always from white's perspective
           const pvArray = Object.keys(pvMap)
             .map(k => {
               const pv = pvMap[parseInt(k)];
-              let sanMoves: string[] = [];
-              let fenForLine = fen;
+              const sanMoves: string[] = [];
+              const fenForLine = fen;
               try {
-                const { Chess } = require('chess.js');
+                // eslint-disable-next-line @typescript-eslint/no-var-requires
+
                 const chess = new Chess(fenForLine);
                 pv.moves.forEach(m => {
-                  const moveObj = chess.move(m, { sloppy: true });
+                  const moveObj = chess.move(m);
                   if (moveObj) sanMoves.push(moveObj.san);
                 });
-              } catch (e) { }
+              } catch { }
               // Reverse cp for black to move
-              let cpValue = pv.cp;
-              // console.log("cpValue", cpValue, turn);
-              // if (cpValue !== null && turn === 'b') cpValue = -cpValue;
+              const cpValue = pv.cp;
               return { cp: cpValue, mate: pv.mate, moves: pv.moves, san: sanMoves.join(' ') };
             })
             .filter(line => line.cp !== null || line.mate !== null)
