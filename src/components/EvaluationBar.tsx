@@ -7,7 +7,7 @@ interface EvaluationBarProps {
   style?: React.CSSProperties;
 }
 
-export default function EvaluationBar({ evaluation, vertical, style, vertical: isVertical }: EvaluationBarProps) {
+export default function EvaluationBar({ evaluation, vertical, style }: EvaluationBarProps) {
   const getBarStyle = () => {
     if (vertical) {
       // Vertical bar: height is percentage, width is fixed

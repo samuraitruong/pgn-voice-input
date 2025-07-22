@@ -76,7 +76,7 @@ export default function Home() {
         // Ignore invalid moves
       }
     }
-  }, [transcript, analyzeBoard, resetTranscript]);
+  }, [transcript, analyzeBoard, resetTranscript, game]);
 
   if (!browserSupportsSpeechRecognition) {
     return (

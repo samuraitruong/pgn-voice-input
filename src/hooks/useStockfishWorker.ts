@@ -65,8 +65,6 @@ export function useStockfishWorker() {
               const sanMoves: string[] = [];
               const fenForLine = fen;
               try {
-                // eslint-disable-next-line @typescript-eslint/no-var-requires
-
                 const chess = new Chess(fenForLine);
                 pv.moves.forEach(m => {
                   const moveObj = chess.move(m);
