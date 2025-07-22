@@ -1,6 +1,31 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { ChevronDown, ChevronRight } from 'lucide-react';
+
+function EngineAnalysisPanel({ pvLines }: { pvLines: any }) {
+  const [isOpen, setIsOpen] = useState(true);
+  return (
+    <div>
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full text-left font-semibold text-base flex items-center gap-2 text-gray-800 py-1 px-2 select-none"
+        type="button"
+      >
+        {isOpen ? <ChevronDown className="inline w-5 h-5 transition-transform" /> : <ChevronRight className="inline w-5 h-5 transition-transform" />}
+        Engine analysis
+      </button>
+      {isOpen && (
+        <div
+          className="px-3 pb-2 pt-1"
+          style={{ width: '100%', maxHeight: '120px', overflowY: 'auto' }}
+        >
+          <BestMoves pvLines={pvLines} />
+        </div>
+      )}
+    </div>
+  );
+}
 import { Chess } from "chess.js";
 import { Chessboard } from "react-chessboard";
 import PgnDataForm from "../components/PgnDataForm";
@@ -207,12 +232,7 @@ export default function Home() {
         <div className="space-y-4">
           <PgnDataForm pgnHeaders={pgnHeaders} setPgnHeaders={setPgnHeaders} />
           <div className="border rounded-md bg-gray-50">
-            <details open>
-              <summary className="cursor-pointer py-1 px-2 font-semibold text-gray-800 select-none">Engine analysis</summary>
-              <div className="px-3 pb-2 pt-1">
-                <BestMoves pvLines={pvLines} />
-              </div>
-            </details>
+            <EngineAnalysisPanel pvLines={pvLines} />
           </div>
           <MoveList
             moves={game.history()}

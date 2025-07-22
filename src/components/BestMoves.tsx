@@ -6,8 +6,8 @@ interface BestMovesProps {
 
 export default function BestMoves({ pvLines }: BestMovesProps) {
   return (
-    <div className="mt-4">
-      <div className="mt-2 flex flex-col gap-1">
+    <div className="mt-1">
+      <div className="flex flex-col gap-1">
         {pvLines.map((line, idx) => (
           <span
             key={idx}

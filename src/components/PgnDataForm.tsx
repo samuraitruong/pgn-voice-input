@@ -15,17 +15,17 @@ export default function PgnDataForm({ pgnHeaders, setPgnHeaders }: PgnDataFormPr
   };
 
   return (
-    <div className="rounded-lg border bg-gray-50 p-3">
+    <div className="rounded-lg border bg-gray-50 p-2">
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-full text-left font-bold text-base flex items-center gap-2 text-gray-900 mb-1"
         type="button"
       >
         {isOpen ? <ChevronDown className="inline w-5 h-5 transition-transform" /> : <ChevronRight className="inline w-5 h-5 transition-transform" />}
-        PGN Metadata
+        Game Info
       </button>
       {isOpen && (
-        <form className="space-y-2 mt-2">
+        <form className="space-y-2 mt-1">
           <div>
             <label htmlFor="Event" className="block text-xs font-bold text-gray-800">Event</label>
             <input type="text" name="Event" id="Event" value={pgnHeaders.Event || ''} onChange={handleChange} className="mt-1 block w-full rounded-md border border-gray-300 text-gray-900 bg-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm h-9 px-3 py-2" />
