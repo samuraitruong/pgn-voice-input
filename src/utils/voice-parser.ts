@@ -21,6 +21,8 @@ const dictionary: { [x: string]: string } = {
   "tag": "x",
   "keen": "K",
   "naye": "N",
+  "hack": "h",
+  "fight": "5"
 }
 
 export function translateSpokenMove(spokenText: string): string {
